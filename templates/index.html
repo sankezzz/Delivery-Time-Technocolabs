@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Time Prediction</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Style to highlight the predicted delivery time */
+        .prediction-box {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Make the input fields normal */
+        .form-control {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="my-5 text-center">Delivery Time Prediction</h2>
+        
+        <!-- CSV File Upload Form -->
+        <h3>Upload CSV</h3>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" class="form-control mb-3" required>
+            <button type="submit" class="btn btn-primary">Submit CSV</button>
+        </form>
+
+        <hr>
+
+        <!-- Manual Input Form -->
+        <h3>Manual Input</h3>
+        <form method="POST">
+            <div class="form-group">
+                <label for="actual_distance_to_destination">Actual Distance to Destination</label>
+                <input type="text" name="actual_distance_to_destination" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="segment_osrm_time">Segment OSRM Time</label>
+                <input type="text" name="segment_osrm_time" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="od_duration_dirr_hour">OD Duration (Hour)</label>
+                <input type="text" name="od_duration_dirr_hour" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="osrm_distance_time_ratio">OSRM Distance Time Ratio</label>
+                <input type="text" name="osrm_distance_time_ratio" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="distance_time_ratio">Distance Time Ratio</label>
+                <input type="text" name="distance_time_ratio" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Get Prediction</button>
+        </form>
+
+        <!-- Display Predicted Delivery Time -->
+        {% if prediction %}
+            <div class="prediction-box">
+                <h4>Predicted Delivery Time: {{ prediction }}</h4>
+            </div>
+        {% endif %}
+        
+        {% if prediction == "Invalid input data" %}
+            <p class="text-danger">Please enter valid data in the form fields.</p>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
